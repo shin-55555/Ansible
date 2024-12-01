@@ -1,0 +1,15 @@
+
+#仮想マシン上の管理用端末にAnsibleをインストール
+pip install ansible-core　#など
+
+#SSH公開鍵認証登録
+ssh-keygen -t rsa                                                            #SSHの鍵ペア（公開鍵と秘密鍵）を生成する                                                    
+ssh-copy-id -o 省略　$HOME/.ssh/id_rsa.pub　対象端末ユーザ@対象端末IPアドレス　  #公開鍵をサーバーやターゲットノードへ
+cat $HOME/.ssh/authorized_keys　　　　　　　　　　　　　　　　　　　　　　　　　　#公開鍵有無の確認
+
+#Ansible.cfgの設定
+
+#作業時メモ
+linuxで疎通確認pingを止めるにはctrl+C
+.は隠しファイル表記
+ファイル編集はvi,:wqで終了
