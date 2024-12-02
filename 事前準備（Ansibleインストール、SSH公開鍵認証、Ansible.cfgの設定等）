@@ -8,8 +8,40 @@ ssh-copy-id -o 省略　$HOME/.ssh/id_rsa.pub　対象端末ユーザ@対象端�
 cat $HOME/.ssh/authorized_keys　　　　　　　　　　　　　　　　　　　　　　　　　　#公開鍵有無の確認
 
 #Ansible.cfgの設定
+find . -iname ansible.cfg　　　　 　　　　#設定ファイル格納場所を調査
+vi ansible.cfg                         　#設定内容記述
+[defaults]
+forks = 3 　　　　　　　　　　　　　　　 #ターゲットノードの並列処理を行うプロセス数
+log_path = 省略　　　　　　　　　　　　　#実行コマンドログ配置場所
+host_key_checking = False　　　　　　　 #公開鍵のフィンガープリントチェックを行わない
+以下省略
+
+#Ansibleコマンドの実行
+inventory.iniの作成
+localhost
+[test_servers]
+ターゲットノードのIP
+
+test_playbook.ymlの作成
+内容省略
+
+ansible-playbook -i <インベントリファイル> <プレイブックファイル>
+インベントリーのデフォルトの場所は、/etc/ansible/hosts ファイルです。-i <path> オプションを使用して、コマンドラインで別のインベントリーファイルを指定できます。
 
 #作業時メモ
-linuxで疎通確認pingを止めるにはctrl+C
-.は隠しファイル表記
-ファイル編集はvi,:wqで終了
+・reboot 再起動
+・linuxで疎通確認pingを止めるにはctrl+C
+・.は隠しファイル表記
+・ファイル編集はvi,:wqで終了、ファイル編集済で保存せず強制終了は:q!
+・vi編集後に/文字列で検索できる
+・
+　①cat /etc/group | grep wheel　
+　②groups　ユーザ名前
+　③usermod -aG wheel ユーザ名前　　　　#rootユーザが実施
+　④groups　ユーザ名前　　　　　　　　　#wheelグループに追加されたか確認
+　⑤visudoでsudoersファイルを確認
+　⑥sudo whoami                    
+  ⑥sudo vi /etc/systemd/logind.conf　　#一般ユーザで実施
+　⑦HandleLidSwitch=ignoreに設定　　　　#iで挿入、escで解除
+
+・SSH 対象ユーザ@対象ノードIPでSSH接続できる。EXITで切断
